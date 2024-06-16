@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "chat4u"
+version = "0.1.0"
+description = ""
+authors = ["burlinchen <chenbeiliuhuo@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+torch = "~2.2.2"
+flask = "^3.0.3"
+transformers = "^4.41.2"
+sentencepiece = "^0.2.0"
+accelerate = "^0.31.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

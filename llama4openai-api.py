@@ -10,17 +10,19 @@ app = Flask(__name__)
 
 # ===== ARGUMENTS =====
 model_name_or_path = "llama-wechat/"
-device = "cuda"
+model_name_or_path = "../alpaca-lora/hf_ckpt/"
+device = "mps"
 
 # set up the llama model
-tokenizer = LlamaTokenizer.from_pretrained(model_name_or_path)
-model = LlamaForCausalLM.from_pretrained(
-    model_name_or_path,
-    load_in_8bit=False,
-    torch_dtype=torch.float16,
-    device_map="auto",
-).eval()
-
+# tokenizer = LlamaTokenizer.from_pretrained(model_name_or_path)
+tokenizer = LlamaTokenizer.from_pretrained('baffo32/decapoda-research-llama-7B-hf')
+# model = LlamaForCausalLM.from_pretrained(
+#     model_name_or_path,
+#     load_in_8bit=False,
+#     torch_dtype=torch.float16,
+#     device_map="auto",
+# ).eval()
+model = LlamaForCausalLM.from_pretrained(model_name_or_path).eval()
 
 def generate_prompt_llama(instruction):
     return f"""Below is an instruction that describes a task. Write a response that appropriately completes the request.
@@ -41,6 +43,12 @@ def evaluate_llama(
     max_new_tokens=128,
     **kwargs,
 ):
+    print(instruction)
+    inputs = tokenizer(instruction, return_tensors="pt")
+    outputs = model.generate(**inputs, max_length=50)
+    generated_text = tokenizer.decode(outputs[0], skip_special_tokens=True)
+    print(f"generated_text: {generated_text}")
+    return generated_text
     prompt = generate_prompt_llama(instruction)
     print(f"prompt: {prompt}")
     print(f"temperature: {temperature}")
