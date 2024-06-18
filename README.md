@@ -136,7 +136,7 @@ curl http://127.0.0.1:5000/chat/completions -v -H "Content-Type: application/jso
 使用 [wechat-chatgpt](https://github.com/fuergaosi233/wechat-chatgpt) 接入微信，API 地址填自己本地的模型服务地址：
 ```sh
 docker run -it --rm --name wechat-chatgpt \
-    -e API=http://127.0.0.1:5000 \
+    -e API=http://192.168.6.179:5005 \
     -e OPENAI_API_KEY=$OPENAI_API_KEY \
     -e MODEL="gpt-3.5-turbo" \
     -e CHAT_PRIVATE_TRIGGER_KEYWORD="" \
